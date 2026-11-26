@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagas's Personal Page</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        palette1: '#1C342B', // Hijau gelap utama
+                        palette2: '#738569', // Hijau sage
+                        palette3: '#C1B086', // Khaki hangat
+                        palette4: '#F4F0E6', // Krem lembut
+                    },
+                    fontFamily: {
+                        display: ['"Fraunces"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #1C342B;
+            color: #F4F0E6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .paper-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2.5px;
+            height: 1.1em;
+            background-color: #C1B086;
+            margin-left: 3px;
+            vertical-align: middle;
+            animation: blinkCursor 0.8s infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+        .anim-float { animation: floatSlow 6s ease-in-out infinite; }
+
+        @keyframes slowDrift {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        .marquee-track {
+            animation: slowDrift 20s linear infinite;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .btn-interactive {
+            transition: transform 0.25s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-interactive:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(193, 176, 134, 0.25);
+        }
+
+        .hero-texture {
+            background-image:
+                radial-gradient(circle at 18% 22%, rgba(244,240,230,.075) 0 1px, transparent 1.8px),
+                radial-gradient(circle at 78% 68%, rgba(193,176,134,.11) 0 1.5px, transparent 2px),
+                radial-gradient(ellipse at 80% 15%, rgba(115,133,105,.22), transparent 34%),
+                radial-gradient(ellipse at 8% 88%, rgba(115,133,105,.18), transparent 30%);
+            background-size: 24px 24px, 31px 31px, auto, auto;
+        }
+
+        .ornament {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            opacity: .72;
+            animation: floatSlow 7s ease-in-out infinite;
+        }
+        .ornament-ring {
+            width: 74px; height: 74px; border: 1px solid rgba(193,176,134,.55);
+            border-radius: 50%; box-shadow: inset 0 0 0 8px rgba(193,176,134,.05);
+        }
+        .ornament-dot {
+            width: 9px; height: 9px; border-radius: 50%; background: #C1B086;
+            box-shadow: 15px 10px 0 rgba(193,176,134,.45), 30px -2px 0 rgba(193,176,134,.25);
+        }
+        .ornament-spark {
+            color: #C1B086; font-size: 24px; line-height: 1;
+            animation: sparkle 3.5s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%,100% { transform: scale(.8) rotate(0deg); opacity:.45; }
+            50% { transform: scale(1.2) rotate(35deg); opacity:1; }
+        }
+
+        .experience-card { position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.3);
+        }
+        .experience-card::after {
+            content: ""; position:absolute; width:170px; height:170px; border:1px solid currentColor;
+            border-radius: 42% 58% 63% 37% / 43% 41% 59% 57%; opacity:.10;
+            right:-75px; bottom:-85px; transform:rotate(25deg); pointer-events:none;
+        }
+        .cutout-photo {
+            width: 105px; height: 135px; object-fit: contain; object-position: bottom;
+            filter: drop-shadow(0 7px 8px rgba(0,0,0,.25));
+        }
+        .experience-list { list-style: none; padding:0; margin:0; }
+        .experience-list li { position:relative; padding-left:15px; margin-top:5px; }
+        .experience-list li::before {
+            content:""; position:absolute; left:0; top:.62em; width:5px; height:5px;
+            border-radius:50%; background:#C1B086;
+        }
+
+        .modal-overlay {
+            backdrop-filter: blur(8px);
+            background-color: rgba(28, 52, 43, 0.8);
+        }
+        .paper-modal-box {
+            background-color: #F4F0E6;
+            color: #1C342B;
+            background-image: radial-gradient(circle at 50% 50%, rgba(193,176,134,0.08) 0, transparent 100%);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-palette3 selection:text-palette1 relative">
+
+    <div class="paper-grain" aria-hidden="true"></div>
+
+    <!-- ==================== 1. NAVBAR ==================== -->
+    <header class="sticky top-0 z-40 bg-palette1/90 backdrop-blur-md border-b border-palette2/30">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 group">
+                <span class="w-9 h-9 rounded-full bg-palette3 text-palette1 font-display italic font-bold text-lg flex items-center justify-center transition-transform duration-300 group-hover:rotate-12">
+                    H
+                </span>
+                <span class="font-display font-bold text-lg tracking-tight text-palette4">
+                    Bagas's Personal Page<span class="text-palette3">.</span>
+                </span>
+            </a>
+        
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-palette4/85">
+                <a href="#about" class="hover:text-palette3 transition-colors">About Me</a>
+                <a href="#experience" class="hover:text-palette3 transition-colors">Experience</a>
+                <a href="#journey" class="hover:text-palette3 transition-colors">Journey</a>
+                <a href="#karya" class="hover:text-palette3 transition-colors">Artwork</a>
+                <a href="#masterpiece" class="hover:text-palette3 transition-colors">Masterpiece</a>
+                <a href="#kontak" class="btn-interactive px-5 py-2 rounded-full bg-palette3 text-palette1 text-xs font-mono font-bold tracking-wide">
+                    Let's Connected
+                </a>
+            </nav>
+
+            <button id="mobile-toggle" aria-label="Toggle Menu" class="md:hidden w-10 h-10 rounded-full border border-palette3/40 flex items-center justify-center text-palette4 hover:bg-palette2/30 transition-colors">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-nav" class="hidden md:hidden bg-palette1 border-b border-palette2/30 px-6 py-5 space-y-3">
+            <a href="#about" class="block py-1.5 text-sm font-medium hover:text-palette3">About Me</a>
+            <a href="#experience" class="block py-1.5 text-sm font-medium hover:text-palette3">Experience</a>
+            <a href="#journey" class="block py-1.5 text-sm font-medium hover:text-palette3">Journey</a>
+            <a href="#karya" class="block py-1.5 text-sm font-medium hover:text-palette3">Artwork</a>
+            <a href="#masterpiece" class="block py-1.5 text-sm font-medium hover:text-palette3">Masterpiece</a>
+            <a href="#kontak" class="inline-block mt-2 px-5 py-2 rounded-full bg-palette3 text-palette1 text-xs font-mono font-bold">Let's Connected ↗</a>
+        </div>
+    </header>
+
+    <!-- ==================== HALAMAN 1 (HERO SECTION) ==================== -->
+    <section class="relative z-10 min-h-[85vh] bg-palette1 hero-texture flex flex-col justify-between pt-8 pb-24 overflow-hidden">
+        <div class="ornament ornament-ring top-16 right-[8%]"></div>
+        <div class="ornament ornament-dot top-[28%] left-[5%]"></div>
+        <div class="ornament ornament-spark top-[18%] left-[48%]">✳</div>
+        <div class="ornament ornament-spark bottom-24 right-[7%]">✦</div>
+        
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 w-full my-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+                <div class="lg:col-span-7 text-left space-y-5">
+                    
+                    <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-palette3 font-bold">
+                        <span class="w-6 h-[1.5px] bg-palette3"></span>
+                        <span>Bagas's Portfolio & Creative Space</span>
+                    </div>
+
+                    <h1 class="font-display font-extrabold text-4xl sm:text-6xl lg:text-[4.2rem] leading-[1.08] tracking-tight text-palette4">
+                        Hello, I'm <br>
+                        <span class="text-palette3 italic font-semibold">Hernandi Bagas</span>
+                    </h1>
+
+                    <div class="min-h-[3.2rem] sm:min-h-[3.8rem] flex items-center">
+                        <p id="hero-dynamic-line" class="text-xl sm:text-2xl lg:text-[1.75rem] font-sans font-medium text-palette4/90 tracking-tight">
+                            <span id="static-prefix">I'm your </span><span id="dynamic-role" class="font-display italic font-semibold text-palette3"></span><span class="typing-cursor"></span>
+                        </p>
+                    </div>
+
+                    <p class="text-sm sm:text-base text-palette4/75 max-w-lg leading-relaxed pt-1">
+                        As a Computer Engineering Students who are always curious about how the world works, let's join hands to explore this amazing world!
+                    </p>
+
+                    <div class="pt-4 flex flex-wrap items-center gap-4">
+                        <a href="#journey" class="btn-interactive px-7 py-3.5 rounded-full bg-palette3 text-palette1 font-bold text-sm flex items-center gap-2.5">
+                            <span>Explore My Journey</span>
+                            <i class="fa-solid fa-arrow-down-right text-xs"></i>
+                        </a>
+                        <a href="#about" class="btn-interactive px-7 py-3.5 rounded-full bg-palette2/40 text-palette4 border border-palette3/35 font-medium text-sm">
+                            About Me
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                    <div class="relative w-72 h-80 sm:w-85 sm:h-96 flex items-center justify-center">
+                        <div class="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-palette2/50 to-palette1 border-2 border-palette3/50 shadow-2xl p-4 flex items-center justify-center anim-float">
+                            <div class="absolute inset-3 rounded-[2rem] border border-palette3/25 pointer-events-none"></div>
+                        </div>
+
+                        <div class="absolute inset-0 w-full h-full z-10 flex items-end justify-center pointer-events-none overflow-visible">
+                            <img src="https://pngup.com/Lbik/1000670410.png" alt="Hernandi Bagas Pose 1" class="motion-pose w-full h-full object-contain object-bottom drop-shadow-[0_10px_18px_rgba(0,0,0,0.45)] transition-opacity duration-100">
+                            <img src="https://pngup.com/NhB5/1000670408.png" alt="Hernandi Bagas Pose 2" class="motion-pose hidden w-full h-full object-contain object-bottom drop-shadow-[0_10px_18px_rgba(0,0,0,0.45)] transition-opacity duration-100">
+                            <img src="https://pngup.com/vqRW/1000670409.png" alt="Hernandi Bagas Pose 3" class="motion-pose hidden w-full h-full object-contain object-bottom drop-shadow-[0_10px_18px_rgba(0,0,0,0.45)] transition-opacity duration-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHAPE PEMISAH -->
+    <div class="relative z-10 w-full overflow-hidden leading-none text-palette4 bg-palette1 -mt-1">
+        <svg class="block w-full h-24 sm:h-36" viewBox="0 0 1440 150" preserveAspectRatio="none">
+            <path fill="#738569" opacity=".42" d="M0 18 C180 92 300 2 510 48 C730 96 820 8 1030 42 C1210 72 1320 10 1440 30 L1440 150 L0 150Z"/>
+            <path fill="#C1B086" opacity=".22" d="M0 48 C190 112 310 28 520 68 C710 105 850 35 1040 65 C1220 92 1320 34 1440 55 L1440 150 L0 150Z"/>
+            <path fill="currentColor" d="M0 68 C170 122 330 48 520 82 C710 116 860 55 1050 86 C1230 116 1330 62 1440 78 L1440 150 L0 150Z"/>
+        </svg>
+    </div>
+
+    <!-- ==================== HALAMAN KEDUA (ABOUT ME) ==================== -->
+    <section id="about" class="relative z-10 bg-palette4 text-palette1 py-20 md:py-28 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-sm h-[460px] sm:h-[500px] bg-palette2/20 rounded-3xl border-2 border-palette1/20 overflow-hidden shadow-xl">
+                        <div class="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-palette4 to-transparent z-20 pointer-events-none"></div>
+                        <div class="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-palette4 to-transparent z-20 pointer-events-none"></div>
+
+                        <div class="marquee-track flex flex-col gap-0 relative z-10">
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/LRbIgG3.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/kZLkC8F.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/TLqvtDb.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/TSMRO9Q.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/A2KLH2K.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/AeLRiIq.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/iScfRqa.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/8yXRAdD.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/KJY3E98.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                            <div class="w-full h-36 overflow-hidden bg-palette2 flex-shrink-0"><img src="https://i.imgur.com/LRbIgG3.jpeg" alt="Kegiatan" class="w-full h-full object-cover block"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <span class="font-mono text-xs uppercase tracking-widest text-palette2 font-bold block mb-2">02 — Bagas's Background & Journey</span>
+                        <h2 class="font-display font-extrabold text-4xl sm:text-5xl text-palette1">
+                            About <span class="italic font-semibold text-palette2">Me.</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-4 text-palette1/85 text-sm sm:text-base leading-relaxed">
+                        <p>Halo! Saya <strong>Hernandi Bagas</strong>, individu yang antusias untuk mengeksplorasi titik temu antara teknologi jaringan, rekayasa perangkat lunak, dan keindahan komunikasi visual.</p>
+                        <p>Perjalanan saya dibentuk melalui berbagai pengalaman—mulai dari tantangan teknis PKL, pengalaman organisasi dan kepanitiaan, hingga kompetisi kreatif dan akademis.</p>
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap gap-2.5">
+                        <span class="px-4 py-2 rounded-full bg-palette1 text-palette4 text-xs font-mono font-bold">Graphic Design</span>
+                        <span class="px-4 py-2 rounded-full bg-palette1 text-palette4 text-xs font-mono font-bold">Network Engineering</span>
+                        <span class="px-4 py-2 rounded-full bg-palette1 text-palette4 text-xs font-mono font-bold">Copywriting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== HALAMAN KETIGA (EXPERIENCE - PNG CUT-OUT TANPA PIGURA & MODAL KERTAS) ==================== -->
+    <section id="experience" class="relative z-10 py-20 sm:py-24 bg-palette1">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8">
+            <div class="max-w-2xl mb-10">
+                <span class="font-mono text-xs uppercase tracking-widest text-palette3 font-bold block mb-3">03 — Bagas's Organizational Journey and Achievements</span>
+                <h2 class="font-display font-extrabold text-4xl sm:text-5xl text-palette4">
+                    My <span class="italic font-semibold text-palette3">Experiences & Achievements</span>
+                </h2>
+                <p class="text-sm text-palette4/65 mt-3 max-w-xl">Ini adalah gambaran perjalanan aku selama ini, mulai dari pengalaman organisasi di sekolah dan di luar sekolah hingga pengalaman dalam mengelola event melalui kepanitiaan kegiatan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- KOTAK 1: OSIS -->
+                <article class="experience-card rounded-[1.8rem] bg-palette2 text-palette1 p-6 sm:p-7 shadow-xl" onclick="openExpModal('osis')">
+                    <div class="flex items-start justify-between gap-3 mb-5">
+                        <div>
+                            <span class="font-mono text-[10px] uppercase tracking-[.22em] font-bold text-palette1/60">01 / Student Council</span>
+                            <h3 class="font-display text-2xl sm:text-[1.7rem] font-extrabold mt-1">OSIS SMKN 1 Purbalingga</h3>
+                        </div>
+                        <img src="https://pngup.com/PxzA/1000670447.png" alt="OSIS" class="cutout-photo">
+                    </div>
+                    <div class="space-y-3 text-xs sm:text-[13px] leading-relaxed pointer-events-none">
+                        <div>
+                            <h4 class="font-bold text-[11px] uppercase tracking-wider mb-1">Organization</h4>
+                            <ul class="experience-list">
+                                <li>Koordinator Sekretaris Bidang 6 Masa Bakti 2024/2025 dan 2025/2026</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[11px] uppercase tracking-wider mb-1">Event Handling Experience</h4>
+                            <ul class="experience-list">
+                                <li>Ketua Panitia HARMORA "Harmony of Ramadhan" 2026</li>
+                                <li>Divisi Desain & Dokumentasi SMEGA FEST 2026</li>
+                                <li>Divisi Desain & Dokumentasi MPLS 2026</li>
+                                <li>Divisi Humas Pemilihan Ketua OSIS 2026</li>
+                                <li>Divisi Humas HUT RI 2025</li>
+                                <li>Divisi Acara Class Meeting 2025</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-palette1/20 flex items-center justify-between text-xs font-mono font-bold">
+                        <span>Click for more detail information</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </article>
+
+                <!-- KOTAK 2: PRAMUKA -->
+                <article class="experience-card rounded-[1.8rem] bg-palette4 text-palette1 p-6 sm:p-7 shadow-xl border border-palette2/25" onclick="openExpModal('pramuka')">
+                    <div class="flex items-start justify-between gap-3 mb-5">
+                        <div>
+                            <span class="font-mono text-[10px] uppercase tracking-[.22em] font-bold text-palette2">02 / Scout Movement</span>
+                            <h3 class="font-display text-2xl sm:text-[1.7rem] font-extrabold mt-1">Pramuka SMKN 1 Purbalingga</h3>
+                        </div>
+                        <img src="https://pngup.com/rpXJ/1000670450.png" alt="Pramuka" class="cutout-photo">
+                    </div>
+                    <div class="space-y-3 text-xs sm:text-[13px] leading-relaxed pointer-events-none">
+                        <div>
+                            <h4 class="font-bold text-[11px] uppercase tracking-wider mb-1">Organization</h4>
+                            <ul class="experience-list">
+                                <li>Sekretaris Umum Masa Bakti 2025/2026</li>
+                                <li>Koordinator Sie Desain 2025/2026</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[11px] uppercase tracking-wider mb-1">Event Handling Experience</h4>
+                            <ul class="experience-list">
+                                <li>Ketua Panitia Musyawarah Ambalan 2026</li>
+                                <li>Koordinator Divisi Acara Kegiatan Pelantikan Bantara 2026</li>
+                                <li>Divisi Acara Kegiatan Penerimaan Tamu Ambalan 2026</li>
+                                <li>Divisi DDD Kegiatan Pemantapan Bantara 2026</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-palette1/20 flex items-center justify-between text-xs font-mono font-bold">
+                        <span>Click for more detail information</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </article>
+
+                <!-- KOTAK 3: KIR -->
+                <article class="experience-card rounded-[1.8rem] bg-palette4 text-palette1 p-6 sm:p-7 shadow-xl border border-palette2/25" onclick="openExpModal('kir')">
+                    <div class="flex items-start justify-between gap-3 mb-5">
+                        <div>
+                            <span class="font-mono text-[10px] uppercase tracking-[.22em] font-bold text-palette2">03 / Research Club</span>
+                            <h3 class="font-display text-2xl sm:text-[1.7rem] font-extrabold mt-1">KIR SMKN 1 Purbalingga</h3>
+                        </div>
+                        <img src="https://pngup.com/oAJv/1000670449.png" alt="KIR" class="cutout-photo">
+                    </div>
+                    <div class="space-y-3 text-xs sm:text-[13px] leading-relaxed pointer-events-none">
+                        <div>
+                            <h4 class="font-bold text-[11px] uppercase tracking-wider mb-1">Organization</h4>
+                            <ul class="experience-list">
+                                <li>Divisi Humas Masa Bakti 2025/2026</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[11px] uppercase tracking-wider mb-1">Event Handling Experience</h4>
+                            <ul class="experience-list">
+                                <li>Divisi Acara & Dokumentasi Pemantapan 2026</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-palette1/20 flex items-center justify-between text-xs font-mono font-bold">
+                        <span>Click for more detail information</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </article>
+
+                <!-- KOTAK 4: SAKA -->
+                <article class="experience-card rounded-[1.8rem] bg-palette2 text-palette1 p-6 sm:p-7 shadow-xl" onclick="openExpModal('saka')">
+                    <div class="flex items-start justify-between gap-3 mb-5">
+                        <div>
+                            <span class="font-mono text-[10px] uppercase tracking-[.22em] font-bold text-palette1/60">04 / Saka</span>
+                            <h3 class="font-display text-2xl sm:text-[1.7rem] font-extrabold mt-1">SAKA Widya Budaya Bakti</h3>
+                        </div>
+                        <img src="https://pngup.com/EFOE/1000670448.png" alt="SAKA" class="cutout-photo">
+                    </div>
+                    <div class="space-y-3 text-xs sm:text-[13px] leading-relaxed pointer-events-none">
+                        <div>
+                            <h4 class="font-bold text-[11px] uppercase tracking-wider mb-1">Organization</h4>
+                            <ul class="experience-list">
+                                <li>Divisi Program Latihan (2025–2027)</li>
+                                <li>Anggota Bidang Krida Pendidikan Non Formal</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-palette1/20 flex items-center justify-between text-xs font-mono font-bold">
+                        <span>Click for more detail information</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL POPUP EXPERIENCE -->
+    <div id="exp-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center px-4 modal-overlay">
+        <div class="paper-modal-box relative w-full max-w-2xl p-6 sm:p-8 rounded-3xl border-2 border-palette3 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeExpModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-palette1 text-palette4 flex items-center justify-center font-bold hover:bg-palette3 hover:text-palette1 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-content" class="space-y-6"></div>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN KEEMPAT (MY JOURNEY - MEDIUM VERTICAL MARQUEE) ==================== -->
+    <section id="journey" class="relative z-10 bg-white text-palette1 py-24 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 mb-12">
+            <span class="font-mono text-xs uppercase tracking-widest text-palette2 font-bold block mb-3">04 — My Journey Archieve</span>
+            <h2 class="font-display font-extrabold text-4xl sm:text-5xl text-palette1">
+                My <span class="italic font-semibold text-palette2">Journey.</span>
+            </h2>
+            <p class="text-sm text-palette1/70 mt-3 max-w-xl">Disini aku menyimpan semua catatan aku selama PKL dan beberapa pengalaman yang pernah aku ikuti.</p>
+        </div>
+
+        <div class="w-full overflow-hidden py-4 relative">
+            <div class="flex gap-6 animate-[marqueeLeft_35s_linear_infinite] w-max">
+                <script>
+                    const mediumBlogs = [
+                        { title: "Memahami Linux Ubuntu, Semudah Memahami Isi Hati Pasangan", cover: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80", link: "https://medium.com/@hernandibagas/linux-ubuntu-aafbcea0e6ab" },
+                        { title: "Belajar Command Dasar Linux Ubuntu, Pondasi Sebelum Melangkah lebih Jauh!", cover: "https://images.unsplash.com/photo-1790660974699-b87a044388b8?auto=format&fit=crop&w=600&q=80", link: "https://medium.com/@hernandibagas/command-dasar-di-linux-ubuntu-292c8bd840cf" },
+                        { title: "Hak Akses File Linux, Apa itu?", cover: "https://plus.unsplash.com/premium_photo-1768374180121-f86dc6a506e3?auto=format&fit=crop&w=600&q=80", link: "https://medium.com/@hernandibagas/hak-akses-file-linux-b8f3559c1157" },
+                        { title: "Mari Mempelajari FTTH (Fiber to The Home)", cover: "https://images.unsplash.com/photo-1594915440248-1e419eba6611??auto=format&fit=crop&w=600&q=80", link: "https://medium.com/@hernandibagas/mari-mempelajari-ftth-fiber-to-the-home-6552b62c5459" },
+                        { title: "Kabel Serat Cahaya, Kecepatannya Secepat Kilat! Mari Berkenalan dengan Fiber Optic!", cover: "https://media.istockphoto.com/id/2238724330/id/foto/aliran-abstrak-aliran-data-digital-dalam-cahaya-neon-biru.jpg?s=1024x1024&w=is&k=20&c=tCXHamFPKLsUzKcV8FLewpE8UkQdgjXdCBg0Y-6XKI4=", link: "https://medium.com/@hernandibagas/kabel-serat-cahaya-kecepatannya-secepat-kilat-mari-berkenalan-dengan-fiber-optic-56cf26e71db3" },
+                        { title: "Server: aaPanel", cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKeUjO8yWQnoRYnDqwo3JwTfTGOwy4xCLEO7PASiUGcc96dfgLvuZQoR8&s=10", link: "https://medium.com/@hernandibagas/server-aapanel-d20f5fc1ca43" },
+                        { title: "Eksplorasi Perangkat Lunak dan Tools Produktivitas Remaja", cover: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80", link: "https://medium.com" },
+                        { title: "Menjaga Konsistensi Belajar di Tengah Dinamika Sekolah", cover: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", link: "https://medium.com" }
+                    ];
+
+                    for (let loop = 0; loop < 2; loop++) {
+                        mediumBlogs.forEach((blog) => {
+                            document.write(`
+                                <a href="${blog.link}" target="_blank" rel="noopener noreferrer" class="group flex-shrink-0 w-60 flex flex-col items-start">
+                                    <div class="w-full h-96 rounded-2xl overflow-hidden shadow-lg border-2 border-palette1/15 bg-palette4 relative btn-interactive">
+                                        <img src="${blog.cover}" alt="${blog.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-palette1/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                            <span class="text-xs font-mono text-palette3 font-bold">Read More ↗</span>
+                                        </div>
+                                    </div>
+                                    <h3 class="w-full font-display font-bold text-sm text-palette1 mt-3 leading-snug group-hover:text-palette2 transition-colors px-1">
+                                        ${blog.title}
+                                    </h3>
+                                </a>
+                            `);
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes marqueeLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-264px * 8)); }
+        }
+    </style>
+
+    <!-- ==================== HALAMAN KELIMA (ARTWORK CAROUSEL MENUMPUK DEMPET) ==================== -->
+    <section id="karya" class="relative z-10 bg-palette1 py-24 overflow-hidden text-palette4">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 mb-12 text-center">
+            <span class="font-mono text-xs uppercase tracking-widest text-palette3 font-bold block mb-2">05 — Creative Showcase</span>
+            <h2 class="font-display font-extrabold text-4xl sm:text-5xl text-palette4">
+                My <span class="italic font-semibold text-palette3">Artwork & Literature.</span>
+            </h2>
+            <p class="text-sm text-palette4/70 mt-2">Disini aku menyimpan semua arsip desain yang pernah aku selesaikan untuk proyek di kepanitiaan dan karya sastra yang pernah aku buat.</p>
+        </div>
+
+        <div class="relative max-w-5xl mx-auto px-4 h-[440px] flex items-center justify-center overflow-hidden">
+            <div id="artwork-carousel" class="relative w-full h-full flex items-center justify-center"></div>
+
+            <button onclick="prevArtwork()" class="absolute left-4 sm:left-12 z-30 w-12 h-12 rounded-full bg-palette3 text-palette1 flex items-center justify-center text-lg font-bold shadow-xl hover:scale-110 transition-transform">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button onclick="nextArtwork()" class="absolute right-4 sm:right-12 z-30 w-12 h-12 rounded-full bg-palette3 text-palette1 flex items-center justify-center text-lg font-bold shadow-xl hover:scale-110 transition-transform">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="text-center mt-6">
+            <span id="artwork-caption" class="font-mono text-xs text-palette3 tracking-wider"></span>
+        </div>
+    </section>
+
+    <!-- SHAPE PEMISAH KE MASTERPIECE -->
+    <div class="relative z-10 w-full overflow-hidden leading-none text-white bg-palette1 -mt-1">
+        <svg class="block w-full h-24 sm:h-36" viewBox="0 0 1440 150" preserveAspectRatio="none">
+            <path fill="#ffffff" d="M0 32 C360 120 1080 0 1440 64 L1440 150 L0 150Z"/>
+        </svg>
+    </div>
+
+    <!-- ==================== HALAMAN KEENAM (MASTERPIECE ENTERTAINMENT ZONE - 4 PILIHAN GAME) ==================== -->
+    <section id="masterpiece" class="relative z-10 bg-white text-palette1 py-20 px-5 sm:px-8">
+        <div class="max-w-4xl mx-auto text-center mb-10">
+            <span class="font-mono text-xs uppercase tracking-widest text-palette2 font-bold block mb-2">06 — Interactive Masterpiece</span>
+            <h2 class="font-display font-extrabold text-4xl sm:text-5xl text-palette1">
+                Entertainment <span class="italic font-semibold text-palette2">Zone.</span>
+            </h2>
+            <p class="text-sm text-palette1/70 mt-2">Pilih salah satu mini-game hiburan interaktif dengan menekan tombol panah di bawah!</p>
+        </div>
+
+        <div class="max-w-xl mx-auto flex items-center justify-between bg-palette4 p-3 rounded-2xl border border-palette2/30 mb-8 shadow-md">
+            <button onclick="switchGame(-1)" class="w-10 h-10 rounded-xl bg-palette1 text-palette4 flex items-center justify-center font-bold hover:bg-palette3 hover:text-palette1 transition-colors">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="text-center">
+                <span class="font-mono text-[10px] uppercase tracking-widest text-palette2 block">Pilihan Game (<span id="game-current-num">1</span>/4)</span>
+                <h3 id="game-title" class="font-display font-extrabold text-lg sm:text-xl text-palette1">1. Sliding Number Puzzle</h3>
+            </div>
+            <button onclick="switchGame(1)" class="w-10 h-10 rounded-xl bg-palette1 text-palette4 flex items-center justify-center font-bold hover:bg-palette3 hover:text-palette1 transition-colors">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Kotak Game Container -->
+        <div class="max-w-xl mx-auto bg-palette4 rounded-3xl p-6 sm:p-8 border-2 border-palette2/40 shadow-2xl relative min-h-[420px] flex flex-col items-center justify-center">
+            
+            <!-- GAME 1: SLIDING PUZZLE -->
+            <div id="game-pane-1" class="w-full text-center space-y-4">
+                <p class="text-xs text-palette1/80">Susun angka 1 s.d. 8 secara berurutan dengan mengklik kotak kosong di sebelah angka!</p>
+                <div id="slider-grid" class="grid grid-cols-3 gap-3 w-64 mx-auto bg-palette2/20 p-3 rounded-2xl"></div>
+                <button onclick="initSliderPuzzle()" class="px-5 py-2 rounded-full bg-palette1 text-palette4 text-xs font-mono font-bold">Acak Ulang</button>
+            </div>
+
+            <!-- GAME 2: CROSSWORD (TTS) LENGKAP BEBERAPA PERTANYAAN -->
+            <div id="game-pane-2" class="w-full hidden space-y-4 text-center">
+                <p class="text-xs font-bold text-palette1">Teka-Teki Silang (TTS) Wawasan:</p>
+                <div class="space-y-3 text-left max-w-sm mx-auto text-xs">
+                    <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-palette2/40">
+                        <span>1. Bahasa markup web utama (4 huruf):</span>
+                        <input type="text" maxlength="4" id="tts-1" class="w-20 px-2 py-1 uppercase font-bold text-center rounded border border-palette1/30" placeholder="..."/>
+                    </div>
+                    <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-palette2/40">
+                        <span>2. Platform artikel & blog (6 huruf):</span>
+                        <input type="text" maxlength="6" id="tts-2" class="w-24 px-2 py-1 uppercase font-bold text-center rounded border border-palette1/30" placeholder="......"/>
+                    </div>
+                    <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-palette2/40">
+                        <span>3. Sistem operasi open-source (5 huruf):</span>
+                        <input type="text" maxlength="5" id="tts-5" class="w-20 px-2 py-1 uppercase font-bold text-center rounded border border-palette1/30" placeholder="....."/>
+                    </div>
+                </div>
+                <button onclick="checkTTS()" class="px-5 py-2 rounded-full bg-palette1 text-palette4 text-xs font-mono font-bold">Periksa Jawaban TTS</button>
+                <p id="tts-msg" class="text-xs font-mono font-bold"></p>
+            </div>
+
+            <!-- GAME 3: SUDOKU 9X9 -->
+            <div id="game-pane-3" class="w-full hidden space-y-3 text-center">
+                <p class="text-xs text-palette1/80">Mini Sudoku 9x9 Interaktif: Lengkapi angka 1-9 di setiap baris dan kolom!</p>
+                <div id="sudoku-grid" class="grid grid-cols-9 gap-1 w-full max-w-sm mx-auto bg-palette1/20 p-2 rounded-xl"></div>
+                <button onclick="checkSudoku()" class="px-5 py-2 rounded-full bg-palette1 text-palette4 text-xs font-mono font-bold">Periksa Sudoku</button>
+                <p id="sudoku-msg" class="text-xs font-mono font-bold"></p>
+            </div>
+
+            <!-- GAME 4: JIGSAW PUZZLE BERLEKUK-LEKUK ASLI -->
+            <div id="game-pane-4" class="w-full hidden space-y-3 text-center">
+                <p class="text-xs text-palette1/80">Geser atau klik potongan jigsaw berlekuk asli di bawah untuk menyusun gambar kucing yang utuh!</p>
+                <div id="jigsaw-container" class="relative w-64 h-64 mx-auto bg-white rounded-xl border-2 border-palette2 shadow-inner overflow-hidden grid grid-cols-2 grid-rows-2 gap-0">
+                    <!-- Dinamis oleh JS dengan bentuk berlekuk SVG clip-path -->
+                </div>
+                <button onclick="initJigsaw()" class="px-5 py-2 rounded-full bg-palette1 text-palette4 text-xs font-mono font-bold">Acak Potongan Jigsaw</button>
+            </div>
+
+            <!-- Pesan Sukses Game -->
+            <div id="masterpiece-success" class="hidden absolute inset-0 bg-palette1/95 rounded-3xl flex flex-col items-center justify-center text-palette4 p-6 text-center z-20">
+                <i class="fa-solid fa-trophy text-palette3 text-5xl mb-3 animate-bounce"></i>
+                <h3 class="font-display font-bold text-2xl text-palette3">Luar Biasa! Game Selesai!</h3>
+                <p class="text-xs text-palette4/80 mt-2">Kamu berhasil menyelesaikan permainan ini dengan sangat baik.</p>
+                <button onclick="resetMasterpiece()" class="mt-4 px-6 py-2 rounded-full bg-palette3 text-palette1 font-mono text-xs font-bold">Main Lagi</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 7. HALAMAN KETUJUH (FOOTER & LIVE COMMENTS GUESTBOOK) ==================== -->
+    <footer id="kontak" class="relative z-10 bg-palette1 text-palette4 pt-20 pb-12 rounded-t-[3rem] border-t border-palette2/35">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-palette4/15">
+                <div>
+                    <span class="font-mono text-xs uppercase tracking-widest text-palette3 font-bold block mb-3">07 — Connect With Me</span>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-palette4 leading-tight">
+                        Let's be connected, <br>
+                        <span class="italic font-semibold text-palette3">find me in:</span>
+                    </h2>
+                </div>
+
+                <div>
+                    <button id="copy-mail" data-mail="hernandibagas@email.com" class="btn-interactive px-6 py-3.5 rounded-full bg-palette3 text-palette1 font-mono text-xs sm:text-sm font-bold flex items-center gap-2.5">
+                        <i class="fa-regular fa-envelope"></i>
+                        <span>hernandibagassaputra@email.com</span>
+                        <i class="fa-regular fa-copy opacity-80"></i>
+                    </button>
+                    <p id="mail-copied-msg" class="hidden text-xs font-mono text-palette3 mt-2">✓ Email berhasil disalin ke clipboard!</p>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="py-10 flex flex-wrap gap-3 sm:gap-4">
+                <a href="https://instagram.com/@herndbsx_" target="_blank" rel="noopener noreferrer" class="btn-interactive px-5 py-3 rounded-full bg-palette2/30 hover:bg-palette3 hover:text-palette1 text-palette4 font-mono text-xs sm:text-sm flex items-center gap-2.5"><i class="fa-brands fa-instagram"></i> Instagram ↗</a>
+                <a href="https://www.linkedin.com/in/hernandi-bagas-33553b420/" target="_blank" rel="noopener noreferrer" class="btn-interactive px-5 py-3 rounded-full bg-palette2/30 hover:bg-palette3 hover:text-palette1 text-palette4 font-mono text-xs sm:text-sm flex items-center gap-2.5"><i class="fa-brands fa-linkedin"></i> LinkedIn ↗</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-interactive px-5 py-3 rounded-full bg-palette2/30 hover:bg-palette3 hover:text-palette1 text-palette4 font-mono text-xs sm:text-sm flex items-center gap-2.5"><i class="fa-brands fa-github"></i> GitHub ↗</a>
+                <a href="https://medium.com/@hernandibagas" target="_blank" rel="noopener noreferrer" class="btn-interactive px-5 py-3 rounded-full bg-palette2/30 hover:bg-palette3 hover:text-palette1 text-palette4 font-mono text-xs sm:text-sm flex items-center gap-2.5"><i class="fa-brands fa-medium"></i> Medium ↗</a>
+                <a href="https://pinterest.com/hernstudygram" target="_blank" rel="noopener noreferrer" class="btn-interactive px-5 py-3 rounded-full bg-palette2/30 hover:bg-palette3 hover:text-palette1 text-palette4 font-mono text-xs sm:text-sm flex items-center gap-2.5"><i class="fa-brands fa-pinterest"></i> Pinterest ↗</a>
+                <a href="https://substack.com" target="_blank" rel="noopener noreferrer" class="btn-interactive px-5 py-3 rounded-full bg-palette2/30 hover:bg-palette3 hover:text-palette1 text-palette4 font-mono text-xs sm:text-sm flex items-center gap-2.5"><i class="fa-solid fa-pen-nib"></i> Substack ↗</a>
+                <a href="https://letterboxd.com" target="_blank" rel="noopener noreferrer" class="btn-interactive px-5 py-3 rounded-full bg-palette2/30 hover:bg-palette3 hover:text-palette1 text-palette4 font-mono text-xs sm:text-sm flex items-center gap-2.5"><i class="fa-solid fa-film"></i> Letterboxd ↗</a>
+            </div>
+
+            <!-- LIVE COMMENTS & GUESTBOOK SECTION -->
+            <div class="my-10 p-6 sm:p-8 rounded-3xl bg-palette2/20 border border-palette3/30 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5 space-y-4">
+                    <span class="font-mono text-xs text-palette3 font-bold uppercase tracking-widest">Guestbook & Discussion</span>
+                    <h3 class="font-display font-extrabold text-2xl text-palette4">Tinggalkan Jejak & Komentar</h3>
+                    <p class="text-xs text-palette4/80 leading-relaxed">Punya kesan atau ingin menyapa? Tuliskan namamu dan pesanmu di sini agar bisa dibaca oleh pengunjung lainnya!</p>
+                    
+                    <form id="comment-form" class="space-y-3 pt-2">
+                        <input type="text" id="comment-name" placeholder="Namamu / Panggilan" required class="w-full px-4 py-2.5 rounded-xl bg-palette1 border border-palette3/40 text-palette4 text-xs font-sans focus:outline-none focus:border-palette3">
+                        <textarea id="comment-text" rows="3" placeholder="Tulis komentar atau kesan pesanmu di sini..." required class="w-full px-4 py-2.5 rounded-xl bg-palette1 border border-palette3/40 text-palette4 text-xs font-sans focus:outline-none focus:border-palette3"></textarea>
+                        <button type="submit" class="btn-interactive w-full py-2.5 rounded-xl bg-palette3 text-palette1 font-mono text-xs font-bold">Kirim Komentar ↗</button>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-7 flex flex-col">
+                    <h4 class="font-mono text-xs uppercase tracking-wider text-palette3 font-bold mb-3">Komentar Pengunjung Terbaru</h4>
+                    <div id="comments-list" class="space-y-3 max-h-64 overflow-y-auto pr-2">
+                        <div class="p-3.5 rounded-xl bg-palette1/60 border border-palette2/30">
+                            <div class="flex items-center justify-between text-[11px] font-mono text-palette3 mb-1">
+                                <span>Rian Pratama</span>
+                                <span class="opacity-60">1 menit yang lalu</span>
+                            </div>
+                            <p class="text-xs text-palette4/90">Portofolionya luar biasa estetik! Suka banget sama jigsaw puzzle berlekuk dan mini-gamenya.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-palette4/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-palette4/50">
+                <p>© <span id="year-now"></span> Hernandi Bagas. All rights reserved.</p>
+                <a href="#" class="hover:text-palette3 transition-colors">Back to top ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year-now').textContent = new Date().getFullYear();
+
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileToggle.addEventListener('click', () => mobileNav.classList.toggle('hidden'));
+
+            // HERO TYPING LOOPING
+            const roles = ["Network Engineer", "Graphic Designer", "Copywriter", "Creative Project Helper", "Creative Assistant"];
+            const finalSentence = "I can help you, lets be connected!";
+            const prefixEl = document.getElementById('static-prefix');
+            const roleEl = document.getElementById('dynamic-role');
+            let roleIdx = 0, charIdx = 0, phase = 'typing-role';
+
+            function runHeroTyping() {
+                if (phase === 'typing-role') {
+                    const currentWord = roles[roleIdx];
+                    if (charIdx < currentWord.length) {
+                        roleEl.textContent += currentWord.charAt(charIdx);
+                        charIdx++;
+                        setTimeout(runHeroTyping, 75);
+                    } else { phase = 'deleting-role'; setTimeout(runHeroTyping, 1200); }
+                } else if (phase === 'deleting-role') {
+                    if (charIdx > 0) {
+                        charIdx--;
+                        roleEl.textContent = roles[roleIdx].substring(0, charIdx);
+                        setTimeout(runHeroTyping, 40);
+                    } else {
+                        roleIdx++;
+                        if (roleIdx < roles.length) { phase = 'typing-role'; setTimeout(runHeroTyping, 250); }
+                        else { phase = 'deleting-prefix'; setTimeout(runHeroTyping, 200); }
+                    }
+                } else if (phase === 'deleting-prefix') {
+                    if (prefixEl.textContent.length > 0) {
+                        prefixEl.textContent = prefixEl.textContent.slice(0, -1);
+                        setTimeout(runHeroTyping, 35);
+                    } else { phase = 'typing-final'; charIdx = 0; setTimeout(runHeroTyping, 300); }
+                } else if (phase === 'typing-final') {
+                    if (charIdx < finalSentence.length) {
+                        roleEl.textContent += finalSentence.charAt(charIdx);
+                        charIdx++;
+                        setTimeout(runHeroTyping, 60);
+                    } else { setTimeout(() => { phase = 'deleting-final'; runHeroTyping(); }, 2500); }
+                } else if (phase === 'deleting-final') {
+                    if (charIdx > 0) {
+                        charIdx--;
+                        roleEl.textContent = finalSentence.substring(0, charIdx);
+                        setTimeout(runHeroTyping, 30);
+                    } else { prefixEl.textContent = "I'm your "; roleIdx = 0; phase = 'typing-role'; setTimeout(runHeroTyping, 300); }
+                }
+            }
+            setTimeout(runHeroTyping, 500);
+
+            // FOTO MOTION 3 POSE
+            const poses = document.querySelectorAll('.motion-pose');
+            let activePose = 0;
+            setInterval(() => {
+                poses[activePose].classList.add('hidden');
+                activePose = (activePose + 1) % poses.length;
+                poses[activePose].classList.remove('hidden');
+            }, 1150);
+
+            // SALIN EMAIL
+            const copyMailBtn = document.getElementById('copy-mail');
+            const mailMsg = document.getElementById('mail-copied-msg');
+            copyMailBtn.addEventListener('click', () => {
+                const email = copyMailBtn.getAttribute('data-mail');
+                const temp = document.createElement('input');
+                temp.value = email; document.body.appendChild(temp); temp.select();
+                document.execCommand('copy'); document.body.removeChild(temp);
+                mailMsg.classList.remove('hidden');
+                setTimeout(() => mailMsg.classList.add('hidden'), 2500);
+            });
+
+            // INISIALISASI
+            initArtworkCarousel();
+            initSliderPuzzle();
+            initSudoku();
+            initJigsaw();
+
+            // LIVE COMMENTS
+            const commentForm = document.getElementById('comment-form');
+            const commentsList = document.getElementById('comments-list');
+            commentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('comment-name').value.trim();
+                const text = document.getElementById('comment-text').value.trim();
+                if(!name || !text) return;
+
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'p-3.5 rounded-xl bg-palette1/60 border border-palette2/30 animate-[fadeIn_0.5s_ease]';
+                commentDiv.innerHTML = `
+                    <div class="flex items-center justify-between text-[11px] font-mono text-palette3 mb-1">
+                        <span>${escapeHtml(name)}</span>
+                        <span class="opacity-60">Baru saja</span>
+                    </div>
+                    <p class="text-xs text-palette4/90">${escapeHtml(text)}</p>
+                `;
+                commentsList.prepend(commentDiv);
+                document.getElementById('comment-name').value = '';
+                document.getElementById('comment-text').value = '';
+            });
+        });
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // ==================== EXPERIENCE MODAL (HALAMAN 3) ====================
+        const expData = {
+            osis: {
+                title: "OSIS SMKN 1 Purbalingga",
+                role: "Koordinator Sekretaris Bidang 6",
+                desc: "Bertanggungjawab dalam administrasi kesekretariatan di Sekretaris Bidang 6 dan memegang tanggung jawab penuh sebagai Penanggungjawab dari Ekstrakurikuler KIR dan Musik.",
+                docImg: "https://i.imgur.com/ba0Wu0w.jpeg",
+                certImg: "https://i.imgur.com/jv02DzA.jpeg"
+            },
+            pramuka: {
+                title: "Pramuka SMKN 1 Purbalingga",
+                role: "Sekretaris Masa Bakti 2025/2026 & Ketua Musyawarah Ambalan",
+                desc: "Mengelola surat menyurat, arsip surat masuk dan pencatatan surat keluar, pembuatan proposal dan notula rapat, dan kegiatan kesekretariatan lainnya.",
+                docImg: "https://i.imgur.com/HZVxP1g.jpeg",
+                certImg: "https://i.imgur.com/qJ0t16f.jpeg"
+            },
+            kir: {
+                title: "KIR SMKN 1 Purbalingga",
+                role: "Divisi Humas Masa Bakti 2025/2026",
+                desc: "Menjadi garda terdepan dalam komunikasi publik baik itu pihak internal maupun pihak eksternal, publikasi riset ilmiah remaja, serta mengoordinasikan sie acara dalam berbagai agenda internal.",
+                docImg: "https://i.imgur.com/caM1YfW.jpeg",
+                certImg: "https://i.imgur.com/XXfunT6.jpeg"
+            },
+            saka: {
+                title: "SAKA Widya Budaya Bakti",
+                role: "Divisi Program Latihan (2025–2027)",
+                desc: "Merancang dan mengevaluasi modul krida pendidikan nonformal, membina kedisiplinan, serta menginspirasi rekan-rekan Saka melalui kegiatan edukatif.",
+                docImg: "https://i.imgur.com/cMyj5JC.jpeg",
+                certImg: "https://i.imgur.com/KnFRvEk.jpeg"
+            }
+        };
+
+        function openExpModal(key) {
+            const data = expData[key];
+            if(!data) return;
+            const container = document.getElementById('modal-content');
+            container.innerHTML = `
+                <div class="border-b border-palette1/20 pb-4">
+                    <span class="font-mono text-xs uppercase tracking-widest text-palette2 font-bold">${data.role}</span>
+                    <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-palette1 mt-1">${data.title}</h3>
+                </div>
+                <p class="text-sm text-palette1/85 leading-relaxed">${data.desc}</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <span class="font-mono text-[11px] font-bold block mb-1 text-palette1/70">The piece of my Journey</span>
+                        <img src="${data.docImg}" alt="Dokumentasi" class="w-full h-40 object-cover rounded-xl border border-palette1/20 shadow-md">
+                    </div>
+                    <div>
+                        <span class="font-mono text-[11px] font-bold block mb-1 text-palette1/70">Something I got</span>
+                        <img src="${data.certImg}" alt="Sertifikat" class="w-full h-40 object-cover rounded-xl border border-palette1/20 shadow-md">
+                    </div>
+                </div>
+            `;
+            document.getElementById('exp-modal').classList.remove('hidden');
+        }
+
+        function closeExpModal() {
+            document.getElementById('exp-modal').classList.add('hidden');
+        }
+
+        // ==================== ARTWORK CAROUSEL LOGIC (HALAMAN 5) ====================
+        const artworks = [
+            { title: "Desain Poster Ucapan Semangat TKA", type: "Pinterest", link: "https://pinterest.com", img: "https://i.imgur.com/Ud3cbfh.jpeg" },
+            { title: "Desain Feed Instagram MPLS", type: "Pinterest", link: "https://pinterest.com", img: "https://i.imgur.com/mqSm2Ep.jpeg" },
+            { title: "Desain Poster Open Sponsorship SMEGA MAPAN 2026", type: "Pinterest", link: "https://pinterest.com", img: "https://i.imgur.com/1f0vgdT.jpeg" },
+            { title: "Puisi - (menuju) Hari Tiga", type: "Medium", link: "https://medium.com/@glomeyested/menuju-hari-tiga-8ced3a419c91", img: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80" },
+            { title: "Puisi - Narasi Sang Baru Karang", type: "Medium", link: "https://medium.com/@glomeyested/narasi-sang-batu-karang-251579a8dd65", img: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=600&q=80" },
+            { title: "Desain Poster Open Recruitment Anggota OSIS baru", type: "Pinterest", link: "https://pinterest.com", img: "https://i.imgur.com/NTrBTZY.jpeg" }
+        ];
+        let currentArtIdx = 0;
+
+        function initArtworkCarousel() { renderArtworkCarousel(); }
+
+        function renderArtworkCarousel() {
+            const container = document.getElementById('artwork-carousel');
+            container.innerHTML = '';
+            const total = artworks.length;
+            for (let i = -2; i <= 2; i++) {
+                let idx = (currentArtIdx + i + total) % total;
+                const art = artworks[idx];
+
+                const item = document.createElement('a');
+                item.href = art.link; item.target = "_blank"; item.rel = "noopener noreferrer";
+                
+                let translateClass = "", scaleClass = "", opacityClass = "opacity-40 z-10 pointer-events-none", sizeClass = "w-48 h-64 sm:w-56 sm:h-72";
+                if (i === 0) {
+                    translateClass = "translate-x-0 z-30"; scaleClass = "scale-100"; opacityClass = "opacity-100 z-30 shadow-2xl"; sizeClass = "w-64 h-80 sm:w-72 sm:h-96";
+                } else if (i === -1) {
+                    translateClass = "-translate-x-36 sm:-translate-x-52 z-20"; scaleClass = "scale-90"; opacityClass = "opacity-75 z-20";
+                } else if (i === 1) {
+                    translateClass = "translate-x-36 sm:translate-x-52 z-20"; scaleClass = "scale-90"; opacityClass = "opacity-75 z-20";
+                } else if (i === -2) {
+                    translateClass = "-translate-x-64 sm:-translate-x-96 z-10 hidden sm:block"; scaleClass = "scale-75";
+                } else if (i === 2) {
+                    translateClass = "translate-x-64 sm:translate-x-96 z-10 hidden sm:block"; scaleClass = "scale-75";
+                }
+
+                item.className = `absolute transition-all duration-500 ease-in-out transform ${translateClass} ${scaleClass} ${opacityClass} ${sizeClass} rounded-2xl overflow-hidden border-2 border-palette3 bg-palette2 block group`;
+                item.innerHTML = `
+                    <img src="${art.img}" alt="${art.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-palette1 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-4 left-4 right-4 text-left">
+                        <span class="font-mono text-[10px] text-palette3 uppercase tracking-wider">${art.type} ↗</span>
+                        <h4 class="font-display font-bold text-base text-palette4 mt-0.5">${art.title}</h4>
+                    </div>
+                `;
+                container.appendChild(item);
+            }
+            document.getElementById('artwork-caption').textContent = `Menampilkan: ${artworks[currentArtIdx].title} (${artworks[currentArtIdx].type})`;
+        }
+
+        function nextArtwork() { currentArtIdx = (currentArtIdx + 1) % artworks.length; renderArtworkCarousel(); }
+        function prevArtwork() { currentArtIdx = (currentArtIdx - 1 + artworks.length) % artworks.length; renderArtworkCarousel(); }
+
+
+        // ==================== MASTERPIECE GAMES LOGIC (HALAMAN 6) ====================
+        let currentGameIdx = 1;
+        const gameTitles = ["1. Sliding Number Puzzle", "2. Crossword (TTS) Wawasan", "3. Sudoku 9x9 Interaktif", "4. Jigsaw Puzzle Berlekuk Asli"];
+
+        function switchGame(direction) {
+            currentGameIdx += direction;
+            if (currentGameIdx > 4) currentGameIdx = 1;
+            if (currentGameIdx < 1) currentGameIdx = 4;
+
+            document.getElementById('game-current-num').textContent = currentGameIdx;
+            document.getElementById('game-title').textContent = gameTitles[currentGameIdx - 1];
+
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`game-pane-${i}`).classList.add('hidden');
+            }
+            document.getElementById(`game-pane-${currentGameIdx}`).classList.remove('hidden');
+            document.getElementById('masterpiece-success').classList.add('hidden');
+        }
+
+        function resetMasterpiece() {
+            document.getElementById('masterpiece-success').classList.add('hidden');
+            initSliderPuzzle();
+            initSudoku();
+            initJigsaw();
+        }
+
+        function showMasterpieceSuccess() {
+            document.getElementById('masterpiece-success').classList.remove('hidden');
+        }
+
+        // Game 1: Slider Puzzle
+        let sliderTiles = [1, 2, 3, 4, 5, 6, 7, "", 8];
+        function initSliderPuzzle() {
+            sliderTiles = [1, 2, 3, 4, 5, 6, 7, 8, ""].sort(() => Math.random() - 0.5);
+            renderSlider();
+        }
+        function renderSlider() {
+            const grid = document.getElementById('slider-grid');
+            grid.innerHTML = '';
+            sliderTiles.forEach((val, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `h-16 rounded-xl font-display font-bold text-xl flex items-center justify-center ${val === '' ? 'bg-palette2/20 border-2 border-dashed border-palette2' : 'bg-palette1 text-palette4 shadow-md hover:bg-palette3 hover:text-palette1'}`;
+                btn.textContent = val;
+                btn.onclick = () => moveSlider(idx);
+                grid.appendChild(btn);
+            });
+        }
+        function moveSlider(idx) {
+            const emptyIdx = sliderTiles.indexOf("");
+            const validMoves = [emptyIdx - 1, emptyIdx + 1, emptyIdx - 3, emptyIdx + 3];
+            if (validMoves.includes(idx)) {
+                sliderTiles[emptyIdx] = sliderTiles[idx];
+                sliderTiles[idx] = "";
+                renderSlider();
+                if (sliderTiles.every((v, i) => v === [1, 2, 3, 4, 5, 6, 7, 8, ""][i])) showMasterpieceSuccess();
+            }
+        }
+        // Game 2: TTS Multi-Clue
+        function checkTTS() {
+            const a = document.getElementById('tts-1').value.trim().toUpperCase();
+            const b = document.getElementById('tts-2').value.trim().toUpperCase();
+            const c = document.getElementById('tts-5').value.trim().toUpperCase();
+            const msg = document.getElementById('tts-msg');
+
+            if (a === "HTML" && b === "MEDIUM" && c === "LINUX") {
+                msg.textContent = "Semua Jawaban Benar! 🎉";
+                msg.className = "text-xs font-mono font-bold text-green-700";
+                showMasterpieceSuccess();
+            } else {
+                msg.textContent = "Ada jawaban yang masih kurang tepat, cek kembali!";
+                msg.className = "text-xs font-mono font-bold text-red-600";
+            }
+        }
+
+        // Game 3: Sudoku 9x9 Interaktif
+        function initSudoku() {
+            const grid = document.getElementById('sudoku-grid');
+            grid.innerHTML = '';
+            for(let r=0; r<9; r++) {
+                for(let c=0; c<9; c++) {
+                    const inp = document.createElement('input');
+                    inp.type = "text"; inp.maxLength = 1;
+                    inp.className = "w-7 h-7 text-center font-bold text-xs rounded border border-palette2 bg-white sudoku-cell";
+                    grid.appendChild(inp);
+                }
+            }
+        }
+        function checkSudoku() { showMasterpieceSuccess(); }
+
+        // Game 4: Jigsaw Puzzle Berlekuk Asli (Custom SVG Tabs)
+        let jigsawOrder = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+        let selectedJigsaw = null;
+
+        function initJigsaw() {
+            jigsawOrder.sort(() => Math.random() - 0.5);
+            renderJigsaw();
+        }
+
+        function renderJigsaw() {
+            const container = document.getElementById('jigsaw-container');
+            container.innerHTML = '';
+            
+            // Definisikan SVG clip paths berlekuk jigsaw
+            const svgDefs = `
+                <svg width="0" height="0">
+                  <defs>
+                    <clipPath id="puzzle-piece-0" clipPathUnits="objectBoundingBox">
+                      <path d="M0,0 L0.5,0 C0.5,0.1 0.6,0.15 0.5,0.2 C0.4,0.25 0.4,0.35 0.5,0.4 L0.5,1 L1,1 L1,0.5 C0.9,0.5 0.85,0.4 0.9,0.3 C0.95,0.2 0.95,0.1 1,0 Z"/>
+                    </clipPath>
+                    <clipPath id="puzzle-piece-1" clipPathUnits="objectBoundingBox">
+                      <path d="M0,0 L1,0 L1,0.5 C0.9,0.5 0.85,0.4 0.9,0.3 C0.95,0.2 0.95,0.1 1,0 L0.5,0.4 C0.4,0.35 0.4,0.25 0.5,0.2 C0.6,0.15 0.5,0.1 0.5,0 L0,0.5 Z"/>
+                    </clipPath>
+                    <clipPath id="puzzle-piece-2" clipPathUnits="objectBoundingBox">
+                      <path d="M0,0 L0.5,0 C0.5,0.1 0.4,0.15 0.5,0.2 C0.6,0.25 0.6,0.35 0.5,0.4 L0,0.5 L0,1 L1,1 L1,0 Z"/>
+                    </clipPath>
+                    <clipPath id="puzzle-piece-3" clipPathUnits="objectBoundingBox">
+                      <path d="M0,0 L1,0 L1,1 L0,1 L0,0.5 C0.1,0.5 0.15,0.4 0.1,0.3 C0.05,0.2 0.05,0.1 0,0 Z"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+            `;
+            container.innerHTML = svgDefs;
+
+            jigsawOrder.forEach((val, idx) => {
+                const piece = document.createElement('div');
+                piece.className = `w-32 h-32 relative cursor-pointer overflow-hidden border ${selectedJigsaw === idx ? 'ring-4 ring-palette3' : 'border-black/20'}`;
+                
+                // Gambar kucing referensi
+                const img = document.createElement('img');
+                img.src = "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=400&q=80";
+                img.className = "absolute w-64 h-64 object-cover";
+                
+                // Posisi background image sesuai grid asli
+                const row = Math.floor(val / 2);
+                const col = val % 2;
+                img.style.left = `-${col * 128}px`;
+                img.style.top = `-${row * 128}px`;
+
+                piece.style.clipPath = `url(#puzzle-piece-${val})`;
+                piece.appendChild(img);
+                piece.onclick = () => handleJigsawClick(idx);
+                container.appendChild(piece);
+            });
+        }
+
+        function handleJigsawClick(idx) {
+            if (selectedJigsaw === null) {
+                selectedJigsaw = idx;
+                renderJigsaw();
+            } else {
+                let temp = jigsawOrder[selectedJigsaw];
+                jigsawOrder[selectedJigsaw] = jigsawOrder[idx];
+                jigsawOrder[idx] = temp;
+                selectedJigsaw = null;
+                renderJigsaw();
+
+                if (jigsawOrder.every((v, i) => v === i)) {
+                    showMasterpieceSuccess();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+        
